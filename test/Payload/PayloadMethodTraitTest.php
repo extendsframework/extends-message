@@ -16,7 +16,6 @@ class PayloadMethodTraitTest extends TestCase
      * Test that correct method will be called.
      *
      * @covers \ExtendsFramework\Message\Payload\PayloadMethodTrait::getMethod()
-     * @covers \ExtendsFramework\Message\Payload\PayloadMethodTrait::getPrefix()
      */
     public function testGetMethod(): void
     {
@@ -45,7 +44,6 @@ class PayloadMethodTraitTest extends TestCase
      * Test that exception will be thrown when method can not be found for payload name.
      *
      * @covers                   \ExtendsFramework\Message\Payload\PayloadMethodTrait::getMethod()
-     * @covers                   \ExtendsFramework\Message\Payload\PayloadMethodTrait::getPrefix()
      * @covers                   \ExtendsFramework\Message\Payload\Exception\MethodNotFound::__construct()
      * @expectedException        \ExtendsFramework\Message\Payload\Exception\MethodNotFound
      * @expectedExceptionMessage Method not found for payload name "QuxBar".
@@ -75,24 +73,19 @@ class MethodStub
     use PayloadMethodTrait;
 
     /**
-     * @var string
-     */
-    protected $prefix = 'foo';
-
-    /**
      * @param MessageInterface $message
      * @return Closure
      * @throws PayloadException
      */
     public function getReflectionMethod(MessageInterface $message): Closure
     {
-        return $this->getMethod($message);
+        return $this->getMethod($message, 'handle');
     }
 
     /**
      * @return bool
      */
-    protected function fooBarQux(): bool
+    protected function handleBarQux(): bool
     {
         return true;
     }

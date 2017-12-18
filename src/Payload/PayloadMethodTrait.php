@@ -16,26 +16,17 @@ trait PayloadMethodTrait
      * An exception will be thrown when method can not be found.
      *
      * @param MessageInterface $message
+     * @param string|null      $prefix
      * @return Closure
-     * @throws PayloadException
+     * @throws MethodNotFound
      */
-    protected function getMethod(MessageInterface $message): Closure
+    protected function getMethod(MessageInterface $message, string $prefix = null): Closure
     {
-        $name = $this->getPrefix() . $message->getPayloadType()->getName();
+        $name = lcfirst($prefix . $message->getPayloadType()->getName());
         if (method_exists($this, $name) === false) {
             throw new MethodNotFound($message);
         }
 
         return (new ReflectionMethod($this, $name))->getClosure($this);
-    }
-
-    /**
-     * Get method name prefix.
-     *
-     * @return string
-     */
-    protected function getPrefix(): string
-    {
-        return $this->prefix;
     }
 }
