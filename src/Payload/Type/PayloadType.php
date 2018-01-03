@@ -30,8 +30,18 @@ class PayloadType implements PayloadTypeInterface
      */
     public function getName(): string
     {
-        $class = new ReflectionClass($this->payload);
+        $class = new ReflectionClass($this->getPayload());
 
         return $class->getShortName();
+    }
+
+    /**
+     * Get payload.
+     *
+     * @return PayloadInterface
+     */
+    protected function getPayload(): PayloadInterface
+    {
+        return $this->payload;
     }
 }

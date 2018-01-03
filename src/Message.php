@@ -84,7 +84,7 @@ class Message implements MessageInterface
     public function andMetaData(array $metaData): MessageInterface
     {
         $clone = clone $this;
-        $clone->metaData = array_replace_recursive($this->metaData, $metaData);
+        $clone->metaData = array_replace_recursive($this->getMetaData(), $metaData);
 
         return $clone;
     }
