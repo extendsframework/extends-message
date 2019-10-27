@@ -30,6 +30,7 @@ class PayloadType implements PayloadTypeInterface
      */
     public function getName(): string
     {
+        /** @noinspection PhpUnhandledExceptionInspection */
         $class = new ReflectionClass($this->getPayload());
 
         return $class->getShortName();
