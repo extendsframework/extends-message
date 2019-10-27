@@ -3,8 +3,8 @@ declare(strict_types=1);
 
 namespace ExtendsFramework\Message\Payload;
 
-use Closure;
 use ExtendsFramework\Message\MessageInterface;
+use ExtendsFramework\Message\Payload\Exception\MethodNotFound;
 use ExtendsFramework\Message\Payload\Type\PayloadTypeInterface;
 use PHPUnit\Framework\TestCase;
 
@@ -43,13 +43,14 @@ class PayloadMethodTraitTest extends TestCase
      *
      * Test that exception will be thrown when method can not be found for payload name.
      *
-     * @covers                   \ExtendsFramework\Message\Payload\PayloadMethodTrait::getMethod()
-     * @covers                   \ExtendsFramework\Message\Payload\Exception\MethodNotFound::__construct()
-     * @expectedException        \ExtendsFramework\Message\Payload\Exception\MethodNotFound
-     * @expectedExceptionMessage Method not found for payload name "QuxBar".
+     * @covers \ExtendsFramework\Message\Payload\PayloadMethodTrait::getMethod()
+     * @covers \ExtendsFramework\Message\Payload\Exception\MethodNotFound::__construct()
      */
     public function testMethodNotFound(): void
     {
+        $this->expectException(MethodNotFound::class);
+        $this->expectExceptionMessage('Method not found for payload name "QuxBar".');
+
         $payloadType = $this->createMock(PayloadTypeInterface::class);
         $payloadType
             ->method('getName')
@@ -65,28 +66,5 @@ class PayloadMethodTraitTest extends TestCase
          */
         $stub = new MethodStub();
         $stub->getReflectionMethod($message);
-    }
-}
-
-class MethodStub
-{
-    use PayloadMethodTrait;
-
-    /**
-     * @param MessageInterface $message
-     * @return Closure
-     * @throws PayloadException
-     */
-    public function getReflectionMethod(MessageInterface $message): Closure
-    {
-        return $this->getMethod($message, 'handle');
-    }
-
-    /**
-     * @return bool
-     */
-    protected function handleBarQux(): bool
-    {
-        return true;
     }
 }
