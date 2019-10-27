@@ -21,7 +21,7 @@ trait PayloadMethodTrait
      * @return Closure
      * @throws MethodNotFound
      */
-    protected function getMethod(MessageInterface $message, string $prefix = null): Closure
+    private function getMethod(MessageInterface $message, string $prefix = null): Closure
     {
         $name = lcfirst(
             $prefix .
