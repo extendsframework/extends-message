@@ -13,21 +13,21 @@ class Message implements MessageInterface
      *
      * @var PayloadInterface
      */
-    protected $payload;
+    private $payload;
 
     /**
      * Payload type.
      *
      * @var PayloadTypeInterface
      */
-    protected $payloadType;
+    private $payloadType;
 
     /**
      * Meta data.
      *
      * @var array
      */
-    protected $metaData;
+    private $metaData;
 
     /**
      * Message constructor.

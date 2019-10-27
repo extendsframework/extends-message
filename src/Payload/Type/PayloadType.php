@@ -13,7 +13,7 @@ class PayloadType implements PayloadTypeInterface
      *
      * @var PayloadInterface
      */
-    protected $payload;
+    private $payload;
 
     /**
      * PayloadType constructor.
@@ -41,7 +41,7 @@ class PayloadType implements PayloadTypeInterface
      *
      * @return PayloadInterface
      */
-    protected function getPayload(): PayloadInterface
+    private function getPayload(): PayloadInterface
     {
         return $this->payload;
     }
