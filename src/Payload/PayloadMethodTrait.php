@@ -6,6 +6,7 @@ namespace ExtendsFramework\Message\Payload;
 use Closure;
 use ExtendsFramework\Message\MessageInterface;
 use ExtendsFramework\Message\Payload\Exception\MethodNotFound;
+use ReflectionException;
 use ReflectionMethod;
 
 trait PayloadMethodTrait
@@ -22,11 +23,17 @@ trait PayloadMethodTrait
      */
     protected function getMethod(MessageInterface $message, string $prefix = null): Closure
     {
-        $name = lcfirst($prefix . $message->getPayloadType()->getName());
-        if (method_exists($this, $name) === false) {
+        $name = lcfirst(
+            $prefix .
+            $message
+                ->getPayloadType()
+                ->getName()
+        );
+
+        try {
+            return (new ReflectionMethod($this, $name))->getClosure($this);
+        } catch (ReflectionException $exception) {
             throw new MethodNotFound($message);
         }
-
-        return (new ReflectionMethod($this, $name))->getClosure($this);
     }
 }
