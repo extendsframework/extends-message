@@ -5,6 +5,7 @@ namespace ExtendsFramework\Message\Payload\Type;
 
 use ExtendsFramework\Message\Payload\PayloadInterface;
 use ReflectionClass;
+use ReflectionException;
 
 class PayloadType implements PayloadTypeInterface
 {
@@ -27,22 +28,12 @@ class PayloadType implements PayloadTypeInterface
 
     /**
      * @inheritDoc
+     * @throws ReflectionException
      */
     public function getName(): string
     {
-        /** @noinspection PhpUnhandledExceptionInspection */
-        $class = new ReflectionClass($this->getPayload());
+        $class = new ReflectionClass($this->payload);
 
         return $class->getShortName();
-    }
-
-    /**
-     * Get payload.
-     *
-     * @return PayloadInterface
-     */
-    private function getPayload(): PayloadInterface
-    {
-        return $this->payload;
     }
 }

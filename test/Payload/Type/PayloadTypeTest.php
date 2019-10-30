@@ -15,7 +15,6 @@ class PayloadTypeTest extends TestCase
      *
      * @covers \ExtendsFramework\Message\Payload\Type\PayloadType::__construct()
      * @covers \ExtendsFramework\Message\Payload\Type\PayloadType::getName()
-     * @covers \ExtendsFramework\Message\Payload\Type\PayloadType::getPayload()
      */
     public function testGetName(): void
     {
